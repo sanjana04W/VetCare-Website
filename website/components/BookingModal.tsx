@@ -143,7 +143,7 @@ export function BookingModal({ initialVet, isOpen, onClose, onSuccess }: Booking
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-slate-100 max-h-[90vh] flex flex-col">
+      <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full overflow-hidden border border-slate-100 max-h-[90vh] flex flex-col transform transition-all duration-300 scale-100 animate-in zoom-in-95">
         {/* Header */}
         <div className="bg-gradient-to-r from-brand-700 via-brand-600 to-teal-600 text-white p-6 relative flex items-center justify-between">
           <div>
@@ -223,7 +223,7 @@ export function BookingModal({ initialVet, isOpen, onClose, onSuccess }: Booking
                 >
                   {vets.map((v) => (
                     <option key={v.uid} value={v.uid}>
-                      {v.displayName} — {v.specialty} (${v.consultationFee})
+                      {v.displayName} — {v.specialty} (Rs. {v.consultationFee.toLocaleString()})
                     </option>
                   ))}
                 </select>
