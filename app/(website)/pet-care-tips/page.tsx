@@ -3,18 +3,25 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { getAllTips } from "@/lib/firebase/firestore";
+import { SEED_TIPS } from "@/lib/firebase/seed";
 import { PetCareTip } from "@/lib/types";
 import { Search, Clock, ArrowRight, BookOpen, Tag } from "lucide-react";
 
 export default function PetCareTipsPage() {
-  const [tips, setTips] = useState<PetCareTip[]>([]);
+  const [tips, setTips] = useState<PetCareTip[]>(() => SEED_TIPS.filter(t => t.published));
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     async function load() {
-      const data = await getAllTips(true);
-      setTips(data);
+      try {
+        const data = await getAllTips(true);
+        if (data && data.length > 0) {
+          setTips(data);
+        }
+      } catch (e) {
+        console.warn("PetCareTipsPage load fallback active:", e);
+      }
     }
     load();
   }, []);
