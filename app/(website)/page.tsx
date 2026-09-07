@@ -8,6 +8,7 @@ import {
   getAllTips, 
   getAllReviews 
 } from "@/lib/firebase/firestore";
+import { SEED_VETS, SEED_TIPS, SEED_REVIEWS } from "@/lib/firebase/seed";
 import { Veterinarian, PetCareTip, Review } from "@/lib/types";
 import { BookingModal } from "@/website/components/BookingModal";
 import { 
@@ -19,7 +20,7 @@ import {
   Stethoscope, 
   Activity, 
   Syringe, 
-  Sparkles,
+  Sparkles, 
   PhoneCall,
   CheckCircle2,
   Heart,
@@ -32,22 +33,26 @@ import {
 } from "lucide-react";
 
 export default function HomePage() {
-  const [vets, setVets] = useState<Veterinarian[]>([]);
-  const [tips, setTips] = useState<PetCareTip[]>([]);
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [vets, setVets] = useState<Veterinarian[]>(() => SEED_VETS.filter(v => v.isApproved));
+  const [tips, setTips] = useState<PetCareTip[]>(() => SEED_TIPS.filter(t => t.published).slice(0, 3));
+  const [reviews, setReviews] = useState<Review[]>(() => SEED_REVIEWS.slice(0, 3));
   const [selectedVet, setSelectedVet] = useState<Veterinarian | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   useEffect(() => {
     async function load() {
-      const [v, t, r] = await Promise.all([
-        getAllVeterinarians(),
-        getAllTips(true),
-        getAllReviews()
-      ]);
-      setVets(v.filter(item => item.isApproved));
-      setTips(t.slice(0, 3));
-      setReviews(r.slice(0, 3));
+      try {
+        const [v, t, r] = await Promise.all([
+          getAllVeterinarians(),
+          getAllTips(true),
+          getAllReviews()
+        ]);
+        if (v && v.length > 0) setVets(v.filter(item => item.isApproved));
+        if (t && t.length > 0) setTips(t.slice(0, 3));
+        if (r && r.length > 0) setReviews(r.slice(0, 3));
+      } catch (e) {
+        console.warn("HomePage load fallback active:", e);
+      }
     }
     load();
   }, []);
