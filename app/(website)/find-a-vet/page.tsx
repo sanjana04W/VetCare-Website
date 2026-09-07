@@ -38,6 +38,11 @@ export default function FindAVetPage() {
     "Canine & Feline Internal Medicine",
     "Orthopedic & Soft Tissue Surgery",
     "Exotic Animals & Avian Specialist",
+    "Emergency Medicine & Critical Care",
+    "Advanced Radiology & Diagnostic Imaging",
+    "Dermatology & Allergy Medicine",
+    "Veterinary Dentistry & Oral Surgery",
+    "Cardiology & Vascular Medicine",
   ];
 
   const daysOfWeek = [
@@ -84,7 +89,7 @@ export default function FindAVetPage() {
     <div className="space-y-12 py-12">
       {/* Header */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+        <div className="reveal-fade-in text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
             Medical Faculty Directory
           </span>
@@ -99,7 +104,7 @@ export default function FindAVetPage() {
 
       {/* Filters Bar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <div className="reveal-scale-up bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
             {/* Search Input */}
             <div className="md:col-span-5 relative">
@@ -180,18 +185,23 @@ export default function FindAVetPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredVets.map((vet) => (
+            {filteredVets.map((vet, idx) => {
+              const delays = ["delay-75", "delay-150", "delay-225"];
+              return (
               <div
                 key={vet.uid}
-                className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between"
+                className={`reveal-scale-up ${delays[idx % delays.length]} bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between`}
               >
                 <div>
-                  <div className="relative h-64 w-full bg-slate-100">
+                  <div className="relative h-64 w-full bg-slate-100 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={vet.photoURL || "https://images.unsplash.com/photo-1559839734-2b71ea197ec2"}
+                      src={vet.photoURL || "/images/vets/dr-sarah-jenkins.jpg"}
                       alt={vet.displayName}
-                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/images/vets/dr-sarah-jenkins.jpg";
+                      }}
+                      className="w-full h-full object-cover object-[center_15%]"
                     />
                     <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-slate-900 flex items-center gap-1 shadow-sm">
                       <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
@@ -256,7 +266,7 @@ export default function FindAVetPage() {
                       Consultation Fee
                     </span>
                     <span className="text-lg font-bold text-slate-900">
-                      ${vet.consultationFee}
+                      Rs. {vet.consultationFee.toLocaleString()}
                     </span>
                   </div>
 
@@ -271,7 +281,8 @@ export default function FindAVetPage() {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+          })}
           </div>
         )}
       </section>
