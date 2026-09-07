@@ -27,12 +27,58 @@ import {
   where 
 } from "firebase/firestore";
 
+const seededCollections = new Set<string>();
+let isFirestoreDisabled = false;
+
+function withTimeout<T>(promise: Promise<T>, ms: number = 1000): Promise<T> {
+  if (isFirestoreDisabled) {
+    return Promise.reject(new Error("Firestore disabled"));
+  }
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error("Firestore timeout")), ms)
+    ),
+  ]);
+}
+
+function handleFirestoreError(e: any, context: string) {
+  const msg = e?.message || String(e);
+  if (
+    msg.includes("PERMISSION_DENIED") ||
+    msg.includes("not been used in project") ||
+    msg.includes("disabled") ||
+    msg.includes("Could not reach Cloud Firestore")
+  ) {
+    isFirestoreDisabled = true;
+  }
+  console.warn(`Firestore ${context} fallback:`, msg);
+}
+
+async function syncCollectionIfEmpty<T extends { id?: string; uid?: string }>(
+  collectionName: string,
+  items: T[]
+): Promise<void> {
+  if (!isLiveFirebaseConfigured || !db || isFirestoreDisabled || seededCollections.has(collectionName)) return;
+  seededCollections.add(collectionName);
+  try {
+    for (const item of items) {
+      const id = item.id || item.uid;
+      if (id) {
+        await withTimeout(setDoc(doc(db, collectionName, id), item, { merge: true }), 1000);
+      }
+    }
+  } catch (e) {
+    handleFirestoreError(e, `sync:${collectionName}`);
+  }
+}
+
 /* =========================================================================
    USERS & VETS
    ========================================================================= */
 
 export async function getUserProfile(uid: string): Promise<UserProfile | null> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const snap = await getDoc(doc(db, "users", uid));
       if (snap.exists()) return snap.data() as UserProfile;
@@ -45,24 +91,27 @@ export async function getUserProfile(uid: string): Promise<UserProfile | null> {
 }
 
 export async function getAllUsers(): Promise<UserProfile[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
-      const snap = await getDocs(collection(db, "users"));
-      return snap.docs.map(d => d.data() as UserProfile);
+      const snap = await withTimeout(getDocs(collection(db, "users")), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as UserProfile);
+      }
+      syncCollectionIfEmpty("users", loadStore().users);
     } catch (e) {
-      console.warn("Firestore getAllUsers fallback:", e);
+      handleFirestoreError(e, "getAllUsers");
     }
   }
   return loadStore().users;
 }
 
 export async function updateUserStatus(uid: string, status: 'active' | 'deactivated'): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
-      await updateDoc(doc(db, "users", uid), { status });
+      await withTimeout(updateDoc(doc(db, "users", uid), { status }), 1000);
       return;
     } catch (e) {
-      console.warn("Firestore updateUserStatus fallback:", e);
+      handleFirestoreError(e, "updateUserStatus");
     }
   }
   const store = loadStore();
@@ -74,19 +123,22 @@ export async function updateUserStatus(uid: string, status: 'active' | 'deactiva
 }
 
 export async function getAllVeterinarians(): Promise<Veterinarian[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
-      const snap = await getDocs(collection(db, "veterinarians"));
-      return snap.docs.map(d => d.data() as Veterinarian);
+      const snap = await withTimeout(getDocs(collection(db, "veterinarians")), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as Veterinarian);
+      }
+      syncCollectionIfEmpty("veterinarians", loadStore().vets);
     } catch (e) {
-      console.warn("Firestore getAllVeterinarians fallback:", e);
+      handleFirestoreError(e, "getAllVeterinarians");
     }
   }
   return loadStore().vets;
 }
 
 export async function getVeterinarianById(uid: string): Promise<Veterinarian | null> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const snap = await getDoc(doc(db, "veterinarians", uid));
       if (snap.exists()) return snap.data() as Veterinarian;
@@ -99,7 +151,7 @@ export async function getVeterinarianById(uid: string): Promise<Veterinarian | n
 }
 
 export async function updateVeterinarianApproval(uid: string, isApproved: boolean): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "veterinarians", uid), { isApproved });
       return;
@@ -116,7 +168,7 @@ export async function updateVeterinarianApproval(uid: string, isApproved: boolea
 }
 
 export async function updateVetAvailability(uid: string, availability: Veterinarian['availability']): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "veterinarians", uid), { availability });
       return;
@@ -133,7 +185,7 @@ export async function updateVetAvailability(uid: string, availability: Veterinar
 }
 
 export async function updateVetProfile(uid: string, updates: Partial<Veterinarian>): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "veterinarians", uid), updates);
       return;
@@ -154,32 +206,37 @@ export async function updateVetProfile(uid: string, updates: Partial<Veterinaria
    ========================================================================= */
 
 export async function getPetsByOwner(ownerId: string): Promise<Pet[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const q = query(collection(db, "pets"), where("ownerId", "==", ownerId));
-      const snap = await getDocs(q);
-      return snap.docs.map(d => d.data() as Pet);
+      const snap = await withTimeout(getDocs(q), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as Pet);
+      }
     } catch (e) {
-      console.warn("Firestore getPetsByOwner fallback:", e);
+      handleFirestoreError(e, "getPetsByOwner");
     }
   }
   return loadStore().pets.filter(p => p.ownerId === ownerId);
 }
 
 export async function getAllPets(): Promise<Pet[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
-      const snap = await getDocs(collection(db, "pets"));
-      return snap.docs.map(d => d.data() as Pet);
+      const snap = await withTimeout(getDocs(collection(db, "pets")), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as Pet);
+      }
+      syncCollectionIfEmpty("pets", loadStore().pets);
     } catch (e) {
-      console.warn("Firestore getAllPets fallback:", e);
+      handleFirestoreError(e, "getAllPets");
     }
   }
   return loadStore().pets;
 }
 
 export async function getPetById(id: string): Promise<Pet | null> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const snap = await getDoc(doc(db, "pets", id));
       if (snap.exists()) return snap.data() as Pet;
@@ -198,7 +255,7 @@ export async function createPet(data: Omit<Pet, "id" | "createdAt">): Promise<Pe
     createdAt: new Date().toISOString()
   };
 
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await setDoc(doc(db, "pets", newPet.id), newPet);
       return newPet;
@@ -214,7 +271,7 @@ export async function createPet(data: Omit<Pet, "id" | "createdAt">): Promise<Pe
 }
 
 export async function updatePet(id: string, updates: Partial<Pet>): Promise<Pet> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "pets", id), updates);
     } catch (e) {
@@ -233,7 +290,7 @@ export async function updatePet(id: string, updates: Partial<Pet>): Promise<Pet>
 }
 
 export async function deletePet(id: string): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await deleteDoc(doc(db, "pets", id));
     } catch (e) {
@@ -250,38 +307,45 @@ export async function deletePet(id: string): Promise<void> {
    ========================================================================= */
 
 export async function getAllAppointments(): Promise<Appointment[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
-      const snap = await getDocs(collection(db, "appointments"));
-      return snap.docs.map(d => d.data() as Appointment);
+      const snap = await withTimeout(getDocs(collection(db, "appointments")), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as Appointment);
+      }
+      syncCollectionIfEmpty("appointments", loadStore().appointments);
     } catch (e) {
-      console.warn("Firestore getAllAppointments fallback:", e);
+      handleFirestoreError(e, "getAllAppointments");
     }
   }
   return loadStore().appointments;
 }
 
 export async function getAppointmentsByOwner(ownerId: string): Promise<Appointment[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const q = query(collection(db, "appointments"), where("ownerId", "==", ownerId));
-      const snap = await getDocs(q);
-      return snap.docs.map(d => d.data() as Appointment);
+      const snap = await withTimeout(getDocs(q), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as Appointment);
+      }
     } catch (e) {
-      console.warn("Firestore getAppointmentsByOwner fallback:", e);
+      handleFirestoreError(e, "getAppointmentsByOwner");
     }
   }
   return loadStore().appointments.filter(a => a.ownerId === ownerId);
 }
 
 export async function getAppointmentsByVet(vetId: string): Promise<Appointment[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const q = query(collection(db, "appointments"), where("vetId", "==", vetId));
-      const snap = await getDocs(q);
-      return snap.docs.map(d => d.data() as Appointment);
+      const snap = await withTimeout(getDocs(q), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as Appointment);
+      }
     } catch (e) {
-      console.warn("Firestore getAppointmentsByVet fallback:", e);
+      handleFirestoreError(e, "getAppointmentsByVet");
     }
   }
   return loadStore().appointments.filter(a => a.vetId === vetId);
@@ -294,7 +358,7 @@ export async function createAppointment(data: Omit<Appointment, "id" | "createdA
     createdAt: new Date().toISOString()
   };
 
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await setDoc(doc(db, "appointments", newAppointment.id), newAppointment);
     } catch (e) {
@@ -338,7 +402,7 @@ export async function updateAppointmentStatus(
   status: AppointmentStatus, 
   rejectionReason?: string
 ): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "appointments", id), { status, rejectionReason });
     } catch (e) {
@@ -370,7 +434,7 @@ export async function updateAppointmentStatus(
 }
 
 export async function reassignAppointment(id: string, newVetId: string, newVetName: string): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "appointments", id), { vetId: newVetId, vetName: newVetName });
     } catch (e) {
@@ -391,38 +455,45 @@ export async function reassignAppointment(id: string, newVetId: string, newVetNa
    ========================================================================= */
 
 export async function getMedicalRecordsByPet(petId: string): Promise<MedicalRecord[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const q = query(collection(db, "medical_records"), where("petId", "==", petId));
-      const snap = await getDocs(q);
-      return snap.docs.map(d => d.data() as MedicalRecord);
+      const snap = await withTimeout(getDocs(q), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as MedicalRecord);
+      }
     } catch (e) {
-      console.warn("Firestore getMedicalRecordsByPet fallback:", e);
+      handleFirestoreError(e, "getMedicalRecordsByPet");
     }
   }
   return loadStore().medicalRecords.filter(m => m.petId === petId);
 }
 
 export async function getMedicalRecordsByVet(vetId: string): Promise<MedicalRecord[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const q = query(collection(db, "medical_records"), where("vetId", "==", vetId));
-      const snap = await getDocs(q);
-      return snap.docs.map(d => d.data() as MedicalRecord);
+      const snap = await withTimeout(getDocs(q), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as MedicalRecord);
+      }
     } catch (e) {
-      console.warn("Firestore getMedicalRecordsByVet fallback:", e);
+      handleFirestoreError(e, "getMedicalRecordsByVet");
     }
   }
   return loadStore().medicalRecords.filter(m => m.vetId === vetId);
 }
 
 export async function getAllMedicalRecords(): Promise<MedicalRecord[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
-      const snap = await getDocs(collection(db, "medical_records"));
-      return snap.docs.map(d => d.data() as MedicalRecord);
+      const snap = await withTimeout(getDocs(collection(db, "medical_records")), 1000);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as MedicalRecord);
+      }
+      syncCollectionIfEmpty("medical_records", loadStore().medicalRecords);
     } catch (e) {
-      console.warn("Firestore getAllMedicalRecords fallback:", e);
+      handleFirestoreError(e, "getAllMedicalRecords");
     }
   }
   return loadStore().medicalRecords;
@@ -435,7 +506,7 @@ export async function createMedicalRecord(data: Omit<MedicalRecord, "id" | "crea
     createdAt: new Date().toISOString()
   };
 
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await setDoc(doc(db, "medical_records", newRecord.id), newRecord);
     } catch (e) {
@@ -467,15 +538,17 @@ export async function createMedicalRecord(data: Omit<MedicalRecord, "id" | "crea
    ========================================================================= */
 
 export async function getVaccinationsByPet(petId: string): Promise<VaccinationRecord[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const q = query(collection(db, "vaccinations"), where("petId", "==", petId));
       const snap = await getDocs(q);
-      return snap.docs.map(d => {
-        const v = d.data() as VaccinationRecord;
-        v.status = calculateVaccineStatus(v.nextDueDate);
-        return v;
-      });
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => {
+          const v = d.data() as VaccinationRecord;
+          v.status = calculateVaccineStatus(v.nextDueDate);
+          return v;
+        });
+      }
     } catch (e) {
       console.warn("Firestore getVaccinationsByPet fallback:", e);
     }
@@ -486,14 +559,17 @@ export async function getVaccinationsByPet(petId: string): Promise<VaccinationRe
 }
 
 export async function getAllVaccinations(): Promise<VaccinationRecord[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const snap = await getDocs(collection(db, "vaccinations"));
-      return snap.docs.map(d => {
-        const v = d.data() as VaccinationRecord;
-        v.status = calculateVaccineStatus(v.nextDueDate);
-        return v;
-      });
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => {
+          const v = d.data() as VaccinationRecord;
+          v.status = calculateVaccineStatus(v.nextDueDate);
+          return v;
+        });
+      }
+      syncCollectionIfEmpty("vaccinations", loadStore().vaccinations);
     } catch (e) {
       console.warn("Firestore getAllVaccinations fallback:", e);
     }
@@ -510,7 +586,7 @@ export async function createVaccinationRecord(data: Omit<VaccinationRecord, "id"
     createdAt: new Date().toISOString()
   };
 
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await setDoc(doc(db, "vaccinations", newVac.id), newVac);
     } catch (e) {
@@ -542,11 +618,14 @@ export async function createVaccinationRecord(data: Omit<VaccinationRecord, "id"
    ========================================================================= */
 
 export async function getAllTips(onlyPublished: boolean = true): Promise<PetCareTip[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const snap = await getDocs(collection(db, "tips"));
-      const list = snap.docs.map(d => d.data() as PetCareTip);
-      return onlyPublished ? list.filter(t => t.published) : list;
+      if (snap.docs.length > 0) {
+        const list = snap.docs.map(d => d.data() as PetCareTip);
+        return onlyPublished ? list.filter(t => t.published) : list;
+      }
+      syncCollectionIfEmpty("tips", loadStore().tips);
     } catch (e) {
       console.warn("Firestore getAllTips fallback:", e);
     }
@@ -567,7 +646,7 @@ export async function createTip(data: Omit<PetCareTip, "id" | "createdAt">): Pro
     createdAt: new Date().toISOString()
   };
 
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await setDoc(doc(db, "tips", newTip.id), newTip);
     } catch (e) {
@@ -582,7 +661,7 @@ export async function createTip(data: Omit<PetCareTip, "id" | "createdAt">): Pro
 }
 
 export async function updateTip(id: string, updates: Partial<PetCareTip>): Promise<PetCareTip> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "tips", id), updates);
     } catch (e) {
@@ -600,7 +679,7 @@ export async function updateTip(id: string, updates: Partial<PetCareTip>): Promi
 }
 
 export async function deleteTip(id: string): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await deleteDoc(doc(db, "tips", id));
     } catch (e) {
@@ -617,10 +696,13 @@ export async function deleteTip(id: string): Promise<void> {
    ========================================================================= */
 
 export async function getAllReviews(): Promise<Review[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const snap = await getDocs(collection(db, "reviews"));
-      return snap.docs.map(d => d.data() as Review);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as Review);
+      }
+      syncCollectionIfEmpty("reviews", loadStore().reviews);
     } catch (e) {
       console.warn("Firestore getAllReviews fallback:", e);
     }
@@ -640,7 +722,7 @@ export async function createReview(data: Omit<Review, "id" | "createdAt">): Prom
     createdAt: new Date().toISOString()
   };
 
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await setDoc(doc(db, "reviews", newReview.id), newReview);
     } catch (e) {
@@ -665,7 +747,7 @@ export async function createReview(data: Omit<Review, "id" | "createdAt">): Prom
 }
 
 export async function respondToReview(id: string, response: string): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "reviews", id), { response });
     } catch (e) {
@@ -685,11 +767,13 @@ export async function respondToReview(id: string, response: string): Promise<voi
    ========================================================================= */
 
 export async function getNotificationsByUser(userId: string): Promise<NotificationItem[]> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       const q = query(collection(db, "notifications"), where("userId", "==", userId));
       const snap = await getDocs(q);
-      return snap.docs.map(d => d.data() as NotificationItem);
+      if (snap.docs.length > 0) {
+        return snap.docs.map(d => d.data() as NotificationItem);
+      }
     } catch (e) {
       console.warn("Firestore getNotificationsByUser fallback:", e);
     }
@@ -698,7 +782,7 @@ export async function getNotificationsByUser(userId: string): Promise<Notificati
 }
 
 export async function markNotificationAsRead(id: string): Promise<void> {
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await updateDoc(doc(db, "notifications", id), { isRead: true });
     } catch (e) {
@@ -721,7 +805,7 @@ export async function createNotification(data: Omit<NotificationItem, "id" | "cr
     createdAt: new Date().toISOString()
   };
 
-  if (isLiveFirebaseConfigured && db) {
+  if (isLiveFirebaseConfigured && db && !isFirestoreDisabled) {
     try {
       await setDoc(doc(db, "notifications", notif.id), notif);
     } catch (e) {
