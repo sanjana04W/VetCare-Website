@@ -98,7 +98,7 @@ export default function AdminAppointmentsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search booking ID, pet, or doctor..."
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-purple-500 shadow-xs"
+            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-brand-500 shadow-xs"
           />
         </div>
       </div>
@@ -111,7 +111,7 @@ export default function AdminAppointmentsPage() {
             onClick={() => setFilterStatus(st)}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${
               filterStatus === st
-                ? "bg-purple-600 text-white shadow-xs"
+                ? "bg-brand-600 text-white shadow-xs"
                 : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
             }`}
           >
@@ -163,7 +163,7 @@ export default function AdminAppointmentsPage() {
 
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-1.5">
-                        <Stethoscope className="w-3.5 h-3.5 text-purple-600" />
+                        <Stethoscope className="w-3.5 h-3.5 text-brand-600" />
                         <span className="font-bold text-slate-900">{apt.vetName}</span>
                       </div>
                       <span className="text-[10px] text-slate-400 block truncate max-w-[180px]">
@@ -186,7 +186,7 @@ export default function AdminAppointmentsPage() {
                                 setReassignModalApt(apt);
                                 setSelectedNewVetId(vets[0]?.uid || "");
                               }}
-                              className="px-2.5 py-1.5 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 rounded-lg text-slate-700 font-semibold text-[11px] transition"
+                              className="px-2.5 py-1.5 bg-slate-100 hover:bg-brand-50 hover:text-brand-700 rounded-lg text-slate-700 font-semibold text-[11px] transition"
                               title="Reassign to another doctor"
                             >
                               Reassign
@@ -216,7 +216,7 @@ export default function AdminAppointmentsPage() {
           <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden border border-slate-100 p-6 space-y-4">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div>
-                <span className="text-[10px] font-bold uppercase text-purple-600 tracking-wider">Caseload Rebalance</span>
+                <span className="text-[10px] font-bold uppercase text-brand-600 tracking-wider">Caseload Rebalance</span>
                 <h3 className="font-bold text-slate-900 text-base">Reassign Appointment</h3>
               </div>
               <button
@@ -242,7 +242,7 @@ export default function AdminAppointmentsPage() {
                 <select
                   value={selectedNewVetId}
                   onChange={(e) => setSelectedNewVetId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-purple-500 bg-slate-50 font-medium"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 font-medium"
                 >
                   {vets.map((v) => (
                     <option key={v.uid} value={v.uid}>
@@ -262,7 +262,7 @@ export default function AdminAppointmentsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition"
+                  className="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition"
                 >
                   Confirm Reassignment
                 </button>
