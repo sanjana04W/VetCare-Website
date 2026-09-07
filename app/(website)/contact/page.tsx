@@ -30,22 +30,22 @@ export default function ContactPage() {
   const clinics = [
     {
       name: "PawPulse Central Animal Hospital (Main Campus)",
-      address: "742 Evergreen Terrace, New York, NY 10001",
-      phone: "+1 (555) 019-2834",
+      address: "No. 42, Dharmapala Mawatha, Colombo 03",
+      phone: "+94 11 269 4512",
       hours: "Mon-Fri: 7:30 AM - 8:00 PM • Sat: 8:00 AM - 6:00 PM • Sun: 24/7 Emergency",
       features: "Full Hospital, In-house Lab, ICU & Surgery Suite"
     },
     {
       name: "PawPulse Surgical Suites",
-      address: "128 Grand Concourse, Brooklyn, NY 11201",
-      phone: "+1 (555) 345-6789",
+      address: "No. 18, Hospital Road, Narahenpita, Colombo 05",
+      phone: "+94 77 345 6789",
       hours: "Tue-Sat: 8:30 AM - 5:30 PM",
       features: "Orthopedic Surgery, Fluoroscopy & Physical Rehab"
     },
     {
       name: "PawPulse Exotic Sanctuary & Avian Ward",
-      address: "45 Roosevelt Way, Queens, NY 11101",
-      phone: "+1 (555) 456-7890",
+      address: "No. 7, Rajapihilla Road, Kandy",
+      phone: "+94 77 456 7890",
       hours: "Mon, Wed, Fri: 10:00 AM - 6:00 PM",
       features: "Avian, Reptile, Rabbit & Small Mammal Specialized Ward"
     }
@@ -54,15 +54,15 @@ export default function ContactPage() {
   const faqs = [
     {
       q: "What should I do if my pet eats chocolate, medication, or toxic plants?",
-      a: "Contact our 24/7 Emergency Line immediately at (800) 555-PAWS or the ASPCA Animal Poison Control Center. Do not induce vomiting without explicit veterinary instruction."
+      a: "Contact our 24/7 Emergency Line immediately at +94 11 269 7297 or the SVMA (Sri Lanka Veterinary Medical Association) emergency helpline. Do not induce vomiting without explicit veterinary instruction."
     },
     {
       q: "How far in advance should I book routine vaccinations?",
       a: "We recommend scheduling wellness appointments 1 to 2 weeks in advance. However, same-day triage and urgent slots are reserved every morning."
     },
     {
-      q: "Do you offer payment plans or pet insurance direct claim processing?",
-      a: "Yes. We accept all major pet insurance providers (Trupanion, Nationwide, Healthy Paws, Lemonade) and partner with CareCredit and Scratchpay for low-interest financing."
+      q: "Do you offer payment plans or pet insurance support?",
+      a: "Yes. We work with leading Sri Lankan pet insurance providers and accept all major bank cards. Flexible installment plans are available through our partner banks for major procedures."
     }
   ];
 
@@ -70,7 +70,7 @@ export default function ContactPage() {
     <div className="space-y-16 py-12">
       {/* Header */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+        <div className="reveal-fade-in text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
             Client Support & Triage
           </span>
@@ -87,7 +87,7 @@ export default function ContactPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Contact Form */}
-          <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm">
+          <div className="reveal-left lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm">
             {isSubmitted ? (
               <div className="text-center py-12 space-y-4">
                 <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-sm">
@@ -121,8 +121,8 @@ export default function ContactPage() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="e.g. Sarah Connor"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
+                      placeholder="e.g. Priyantha Fernando"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
                     />
                   </div>
 
@@ -135,8 +135,8 @@ export default function ContactPage() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="sarah@example.com"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
+                      placeholder="name@example.com"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
                     />
                   </div>
                 </div>
@@ -144,29 +144,29 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                      Phone Number
+                      Mobile Number
                     </label>
                     <input
                       type="tel"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      placeholder="+1 (555) 000-0000"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
+                      placeholder="e.g. 077 123 4567"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
                     />
                   </div>
 
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
-                      Subject
+                      Inquiry Department
                     </label>
                     <select
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50 text-slate-700"
                     >
-                      <option value="General Inquiry">General Clinical Inquiry</option>
-                      <option value="Appointment Question">Appointment Question</option>
-                      <option value="Prescription Refill">Prescription Refill Request</option>
+                      <option value="General Question">General Clinic Inquiry</option>
+                      <option value="Appointment Booking">Appointment Scheduling</option>
+                      <option value="Medical Records">Medical Record Dossier</option>
                       <option value="Billing & Insurance">Billing & Pet Insurance</option>
                     </select>
                   </div>
@@ -198,7 +198,7 @@ export default function ContactPage() {
           </div>
 
           {/* Quick Contact & Emergency Column */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="reveal-right delay-100 lg:col-span-5 space-y-6">
             {/* Urgent Hotline Card */}
             <div className="bg-gradient-to-br from-rose-900 to-slate-900 text-white p-8 rounded-3xl shadow-lg space-y-3 border border-rose-800">
               <span className="inline-block px-3 py-1 rounded-full bg-rose-500/30 text-rose-300 font-bold text-[10px] tracking-wider uppercase">
@@ -209,11 +209,11 @@ export default function ContactPage() {
                 If your companion is experiencing severe bleeding, respiratory arrest, bloat, or toxin ingestion, contact our ICU dispatch immediately.
               </p>
               <a
-                href="tel:18005557297"
+                href="tel:+94112697297"
                 className="inline-flex items-center gap-2 px-5 py-3 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-xl text-sm transition shadow-md shadow-rose-600/30"
               >
                 <Phone className="w-4 h-4 animate-bounce" />
-                <span>Call (800) 555-PAWS</span>
+                <span>Call +94 11 269 7297</span>
               </a>
             </div>
 
@@ -241,7 +241,7 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <section className="reveal-scale-up max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center space-y-2">
           <span className="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-3 py-1 rounded-full">
             Frequently Answered
