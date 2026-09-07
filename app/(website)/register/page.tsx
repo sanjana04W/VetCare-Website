@@ -37,8 +37,14 @@ export default function RegisterPage() {
     setError("");
     setIsSubmitting(true);
 
+    if (email.trim().toLowerCase() === "admin@pawpulse.com") {
+      setError("This email address is reserved for system administration. Please use your personal email.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      const ok = await register(name, email, role, phone);
+      const ok = await register(name, email, role, phone, password);
       if (ok) {
         if (role === "veterinarian") {
           router.push("/vet-dashboard");
@@ -165,7 +171,7 @@ export default function RegisterPage() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
-                  placeholder="+1 (555) 000-0000"
+                  placeholder="+94 77 000 0000"
                 />
               </div>
             </div>
