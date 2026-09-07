@@ -16,12 +16,12 @@ import {
 
 export default function EmergencyPortalPage() {
   const { user } = useAuth();
-  const [primaryName, setPrimaryName] = useState("Pam Beesly");
-  const [primaryPhone, setPrimaryPhone] = useState("+1 (555) 998-1122");
+  const [primaryName, setPrimaryName] = useState("Priya Fernando");
+  const [primaryPhone, setPrimaryPhone] = useState("+94 77 123 4567");
   const [primaryRelation, setPrimaryRelation] = useState("Co-owner / Spouse");
 
-  const [secondaryName, setSecondaryName] = useState("Jim Halpert");
-  const [secondaryPhone, setSecondaryPhone] = useState("+1 (555) 998-3344");
+  const [secondaryName, setSecondaryName] = useState("Nuwan Perera");
+  const [secondaryPhone, setSecondaryPhone] = useState("+94 71 987 6543");
   const [secondaryRelation, setSecondaryRelation] = useState("Neighbor / Emergency Caretaker");
 
   const [saved, setSaved] = useState(false);
@@ -146,11 +146,11 @@ export default function EmergencyPortalPage() {
               For acute collapse, vehicular trauma, or toxin ingestion:
             </p>
             <a
-              href="tel:18005557297"
+              href="tel:+94112697297"
               className="w-full py-3 bg-white hover:bg-rose-50 text-rose-900 font-extrabold text-sm rounded-xl flex items-center justify-center gap-2 transition shadow-sm"
             >
               <PhoneCall className="w-4 h-4 text-rose-700" />
-              <span>(800) 555-PAWS (7297)</span>
+              <span>+94 11 269 7297</span>
             </a>
           </div>
 
