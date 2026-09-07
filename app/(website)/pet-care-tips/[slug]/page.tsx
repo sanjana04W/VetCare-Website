@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getTipBySlug, getAllTips } from "@/lib/firebase/firestore";
+import { SEED_TIPS } from "@/lib/firebase/seed";
 import { PetCareTip } from "@/lib/types";
 import { Clock, Calendar, ArrowLeft, User, Tag, Share2, CheckCircle2 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
@@ -12,19 +13,25 @@ import { ArticleContent } from "@/website/components/ArticleContent";
 export default function TipDetailPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const [tip, setTip] = useState<PetCareTip | null>(null);
-  const [relatedTips, setRelatedTips] = useState<PetCareTip[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const initialTip = SEED_TIPS.find(t => t.slug === slug) || null;
+  const [tip, setTip] = useState<PetCareTip | null>(() => initialTip);
+  const [relatedTips, setRelatedTips] = useState<PetCareTip[]>(() => 
+    SEED_TIPS.filter(t => t.slug !== slug).slice(0, 2)
+  );
+  const [isLoading, setIsLoading] = useState(!initialTip);
 
   useEffect(() => {
     async function load() {
       if (!slug) return;
-      setIsLoading(true);
       try {
         const found = await getTipBySlug(slug);
-        setTip(found);
+        if (found) setTip(found);
         const all = await getAllTips(true);
-        setRelatedTips(all.filter(t => t.slug !== slug).slice(0, 2));
+        if (all && all.length > 0) {
+          setRelatedTips(all.filter(t => t.slug !== slug).slice(0, 2));
+        }
+      } catch (e) {
+        console.warn("TipDetailPage load fallback active:", e);
       } finally {
         setIsLoading(false);
       }
