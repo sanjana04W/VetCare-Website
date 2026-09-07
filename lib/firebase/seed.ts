@@ -881,6 +881,30 @@ export const SEED_REVIEWS: Review[] = [
     comment: "Finding a true rabbit specialist in the city is rare. Dr. Rostova examined Mochi with such precision and gave great digestive hay recommendations.",
     response: "Thank you Emily! Mochi's incisors and gut motility look great. Give that sweet lop a gentle head scratch for me!",
     createdAt: "2026-08-30T11:45:00.000Z"
+  },
+  {
+    id: "rev_04",
+    vetId: "vet_01",
+    vetName: "Dr. Sarah Jenkins, DVM",
+    ownerId: "owner_01",
+    ownerName: "Kavinda Wickramasinghe",
+    appointmentId: "apt_02",
+    rating: 5,
+    comment: "Brought my cat Simba in for an emergency midnight triage. The ICU team was phenomenal, caring, and stabilized him within 20 minutes. Can't thank Dr. Jenkins and PawPulse enough!",
+    response: "We are so thrilled Simba made a rapid turnaround, Kavinda! The whole emergency team sends our warmest regards.",
+    createdAt: "2026-09-02T22:15:00.000Z"
+  },
+  {
+    id: "rev_05",
+    vetId: "vet_02",
+    vetName: "Dr. Marcus Chen, BVSc",
+    ownerId: "owner_02",
+    ownerName: "Shenali Perera",
+    appointmentId: "apt_05",
+    rating: 5,
+    comment: "Routine dental scaling and vaccinations were completely stress-free. The transparent care plan and gentle fear-free handling made Rocky wag his tail throughout the visit.",
+    response: "Rocky was such a brave boy today! Thank you Shenali for trusting us with his routine care.",
+    createdAt: "2026-09-04T10:30:00.000Z"
   }
 ];
 

@@ -49,7 +49,15 @@ export default function HomePage() {
         ]);
         if (v && v.length > 0) setVets(v.filter(item => item.isApproved));
         if (t && t.length > 0) setTips(t.slice(0, 3));
-        if (r && r.length > 0) setReviews(r.slice(0, 3));
+        if (r && r.length >= 3) {
+          setReviews(r.slice(0, 3));
+        } else if (r && r.length > 0) {
+          const existingIds = new Set(r.map(item => item.id));
+          const merged = [...r, ...SEED_REVIEWS.filter(item => !existingIds.has(item.id))];
+          setReviews(merged.slice(0, 3));
+        } else {
+          setReviews(SEED_REVIEWS.slice(0, 3));
+        }
       } catch (e) {
         console.warn("HomePage load fallback active:", e);
       }

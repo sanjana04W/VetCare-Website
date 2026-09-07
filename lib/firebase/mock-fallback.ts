@@ -80,6 +80,12 @@ export function loadStore(): MockStore {
     // Always sync latest vets list (adds new doctors), tips, and photos
     store.vets = [...SEED_VETS];
     store.tips = [...SEED_TIPS];
+    // Ensure all reviews from SEED_REVIEWS are present
+    const existingIds = new Set((store.reviews || []).map(r => r.id));
+    const missing = SEED_REVIEWS.filter(r => !existingIds.has(r.id));
+    if (missing.length > 0 || !store.reviews || store.reviews.length < 3) {
+      store.reviews = [...(store.reviews || []), ...missing];
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
     return store;
   } catch {
