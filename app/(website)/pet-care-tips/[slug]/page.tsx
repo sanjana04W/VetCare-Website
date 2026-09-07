@@ -7,6 +7,7 @@ import { getTipBySlug, getAllTips } from "@/lib/firebase/firestore";
 import { PetCareTip } from "@/lib/types";
 import { Clock, Calendar, ArrowLeft, User, Tag, Share2, CheckCircle2 } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import { ArticleContent } from "@/website/components/ArticleContent";
 
 export default function TipDetailPage() {
   const params = useParams();
@@ -103,61 +104,26 @@ export default function TipDetailPage() {
       </div>
 
       {/* Cover Image */}
-      <div className="relative rounded-3xl overflow-hidden shadow-lg border border-slate-200 aspect-[16/9]">
+      <div className="relative rounded-3xl overflow-hidden shadow-lg border border-slate-200 aspect-[16/9] bg-slate-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={tip.coverImage}
+          src={tip.coverImage || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=800"}
           alt={tip.title}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=800";
+          }}
           className="w-full h-full object-cover"
         />
       </div>
 
       {/* Article Content */}
-      <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm space-y-6 text-slate-700 leading-relaxed">
-        <div className="p-4 rounded-2xl bg-brand-50/70 border-l-4 border-brand-600 text-brand-950 text-sm font-medium italic">
+      <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm space-y-8 text-slate-700 leading-relaxed">
+        <div className="p-5 rounded-2xl bg-brand-50/80 border-l-4 border-brand-600 text-brand-950 text-sm sm:text-base font-medium italic shadow-2xs">
           {tip.excerpt}
         </div>
 
-        {/* Formatted body */}
-        <div className="space-y-4 text-base">
-          {tip.content.split("\n\n").map((paragraph, idx) => {
-            if (paragraph.startsWith("### ")) {
-              return (
-                <h3 key={idx} className="text-xl font-bold text-slate-900 pt-4 pb-1">
-                  {paragraph.replace("### ", "")}
-                </h3>
-              );
-            }
-            if (paragraph.startsWith("- ")) {
-              const items = paragraph.split("\n- ");
-              return (
-                <ul key={idx} className="space-y-2 pl-4">
-                  {items.map((it, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span>{it.replace("- ", "")}</span>
-                    </li>
-                  ))}
-                </ul>
-              );
-            }
-            if (paragraph.startsWith("1. ")) {
-              const items = paragraph.split(/\n\d+\.\s/);
-              return (
-                <ol key={idx} className="space-y-2 pl-4 list-decimal text-sm text-slate-600">
-                  {items.map((it, i) => (
-                    <li key={i}>{it.replace(/^\d+\.\s/, "")}</li>
-                  ))}
-                </ol>
-              );
-            }
-            return (
-              <p key={idx} className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                {paragraph}
-              </p>
-            );
-          })}
-        </div>
+        {/* Clean, Neat Formatted Article Body */}
+        <ArticleContent content={tip.content} />
 
         {/* Tags */}
         <div className="pt-6 border-t border-slate-100 flex flex-wrap gap-2 items-center">

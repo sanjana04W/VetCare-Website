@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/lib/contexts/AuthContext";
 import { NotificationProvider } from "@/lib/contexts/NotificationContext";
+import { ScrollObserver } from "@/website/components/ScrollObserver";
 
 export const metadata: Metadata = {
   title: "PawPulse VetCare | Modern Veterinary Medicine & Companion Health",
@@ -17,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased flex flex-col min-h-screen selection:bg-brand-500 selection:text-white">
+        <ScrollObserver />
         <AuthProvider>
           <NotificationProvider>
             {children}

@@ -27,6 +27,7 @@ export default function PortalLayout({
     { href: "/portal/appointments", label: "Appointments", icon: Calendar },
     { href: "/portal/records", label: "Health & Vaccines", icon: FileText },
     { href: "/portal/emergency", label: "Emergency Profile", icon: ShieldAlert },
+    { href: "/portal/profile", label: "My Profile", icon: User },
   ];
 
   return (
