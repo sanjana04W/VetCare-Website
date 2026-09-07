@@ -169,7 +169,7 @@ export default function AdminTipsPage() {
 
         <button
           onClick={openCreateModal}
-          className="px-4 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-xs transition self-start sm:self-auto"
+          className="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-xs transition self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Write New Article</span>
@@ -186,7 +186,7 @@ export default function AdminTipsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search articles by title, author, or category..."
-              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-purple-500 bg-slate-50"
+              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
             />
           </div>
           <span className="text-xs text-slate-400 font-medium hidden sm:inline">
@@ -260,7 +260,7 @@ export default function AdminTipsPage() {
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => openEditModal(tip)}
-                          className="p-1.5 rounded-lg text-slate-500 hover:text-purple-600 hover:bg-purple-50 transition"
+                          className="p-1.5 rounded-lg text-slate-500 hover:text-brand-600 hover:bg-brand-50 transition"
                           title="Edit"
                         >
                           <Edit2 className="w-4 h-4" />
@@ -286,7 +286,7 @@ export default function AdminTipsPage() {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
           <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full overflow-hidden border border-slate-100 max-h-[90vh] flex flex-col">
-            <div className="bg-purple-700 text-white p-6 flex items-center justify-between">
+            <div className="bg-brand-700 text-white p-6 flex items-center justify-between">
               <h3 className="font-bold text-lg">
                 {editingTip ? "Edit Knowledge Article" : "Create New Pet Care Article"}
               </h3>
@@ -307,7 +307,7 @@ export default function AdminTipsPage() {
                   value={title}
                   onChange={(e) => handleTitleChange(e.target.value)}
                   placeholder="e.g. 10 Critical Signs Your Dog Needs Urgent Triage"
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500 font-semibold"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500 font-semibold"
                 />
               </div>
 
@@ -319,7 +319,7 @@ export default function AdminTipsPage() {
                     required
                     value={slug}
                     onChange={(e) => setSlug(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500 font-mono"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500 font-mono"
                   />
                 </div>
                 <div>
@@ -327,7 +327,7 @@ export default function AdminTipsPage() {
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500"
                   >
                     <option value="Nutrition">Nutrition</option>
                     <option value="Health & Wellness">Health & Wellness</option>
@@ -345,7 +345,7 @@ export default function AdminTipsPage() {
                   required
                   value={excerpt}
                   onChange={(e) => setExcerpt(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500 resize-none"
                 />
               </div>
 
@@ -357,7 +357,7 @@ export default function AdminTipsPage() {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Write your clinical guide here. Markdown headers (###), bullet points (-), and numbered steps (1.) are supported..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500 font-mono text-xs"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500 font-mono text-xs"
                 />
               </div>
 
@@ -369,7 +369,7 @@ export default function AdminTipsPage() {
                     required
                     value={coverImage}
                     onChange={(e) => setCoverImage(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500"
                   />
                 </div>
                 <div>
@@ -379,7 +379,7 @@ export default function AdminTipsPage() {
                     required
                     value={authorName}
                     onChange={(e) => setAuthorName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500"
                   />
                 </div>
               </div>
@@ -392,7 +392,7 @@ export default function AdminTipsPage() {
                     value={readTime}
                     onChange={(e) => setReadTime(e.target.value)}
                     placeholder="e.g. 5 min read"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500"
                   />
                 </div>
                 <div>
@@ -402,7 +402,7 @@ export default function AdminTipsPage() {
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
                     placeholder="e.g. Canine, Dental, Prevention"
-                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500"
                   />
                 </div>
               </div>
@@ -413,7 +413,7 @@ export default function AdminTipsPage() {
                   id="published_checkbox"
                   checked={published}
                   onChange={(e) => setPublished(e.target.checked)}
-                  className="rounded text-purple-600 focus:ring-purple-500 w-4 h-4"
+                  className="rounded text-brand-600 focus:ring-brand-500 w-4 h-4"
                 />
                 <label htmlFor="published_checkbox" className="font-semibold text-slate-800">
                   Publish article immediately to public website
@@ -430,7 +430,7 @@ export default function AdminTipsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition"
+                  className="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition"
                 >
                   {editingTip ? "Update Article" : "Save & Publish"}
                 </button>
