@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { getAllVeterinarians } from "@/lib/firebase/firestore";
+import { SEED_VETS } from "@/lib/firebase/seed";
 import { Veterinarian } from "@/lib/types";
 import { BookingModal } from "@/website/components/BookingModal";
 import { 
@@ -17,7 +18,7 @@ import {
 } from "lucide-react";
 
 export default function FindAVetPage() {
-  const [vets, setVets] = useState<Veterinarian[]>([]);
+  const [vets, setVets] = useState<Veterinarian[]>(() => SEED_VETS.filter(v => v.isApproved));
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSpecialty, setSelectedSpecialty] = useState("All");
   const [selectedDay, setSelectedDay] = useState<number | "All">("All");
@@ -27,8 +28,14 @@ export default function FindAVetPage() {
 
   useEffect(() => {
     async function load() {
-      const data = await getAllVeterinarians();
-      setVets(data.filter(v => v.isApproved));
+      try {
+        const data = await getAllVeterinarians();
+        if (data && data.length > 0) {
+          setVets(data.filter(v => v.isApproved));
+        }
+      } catch (e) {
+        console.warn("FindAVetPage load fallback active:", e);
+      }
     }
     load();
   }, []);
