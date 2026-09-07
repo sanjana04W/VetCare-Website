@@ -84,7 +84,7 @@ export default function AdminVetsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by doctor or license..."
-              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-purple-500 shadow-xs"
+              className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-brand-500 shadow-xs"
             />
           </div>
 
@@ -95,7 +95,7 @@ export default function AdminVetsPage() {
                 onClick={() => setFilterApproval(tab)}
                 className={`px-3 py-2 rounded-xl text-xs font-semibold transition ${
                   filterApproval === tab
-                    ? "bg-purple-600 text-white shadow-xs"
+                    ? "bg-brand-600 text-white shadow-xs"
                     : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
                 }`}
               >
@@ -140,7 +140,7 @@ export default function AdminVetsPage() {
 
                 <div className="p-5 space-y-3">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-purple-700">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-brand-700">
                       {vet.specialty}
                     </span>
                     <h3 className="text-lg font-bold text-slate-900 mt-0.5">{vet.displayName}</h3>
@@ -157,12 +157,12 @@ export default function AdminVetsPage() {
                     </div>
                     <div className="p-2 rounded-xl bg-slate-50 border border-slate-100">
                       <span className="text-[10px] uppercase font-bold text-slate-400 block">Rate</span>
-                      <span className="font-bold text-slate-900">${vet.consultationFee} / Visit</span>
+                      <span className="font-bold text-slate-900">Rs. {vet.consultationFee.toLocaleString()} / Visit</span>
                     </div>
                   </div>
 
                   <p className="text-xs text-slate-600 flex items-start gap-1 pt-1">
-                    <MapPin className="w-3.5 h-3.5 text-purple-600 shrink-0 mt-0.5" />
+                    <MapPin className="w-3.5 h-3.5 text-brand-600 shrink-0 mt-0.5" />
                     <span>{vet.clinicName}</span>
                   </p>
                 </div>

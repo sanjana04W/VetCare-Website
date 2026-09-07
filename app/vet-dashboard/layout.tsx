@@ -17,7 +17,8 @@ import {
   ArrowLeft,
   Menu,
   X,
-  Stethoscope
+  Stethoscope,
+  Lock
 } from "lucide-react";
 
 export default function VetDashboardLayout({
@@ -26,7 +27,7 @@ export default function VetDashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user, role, isLoading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navItems = [
@@ -38,6 +39,43 @@ export default function VetDashboardLayout({
     { href: "/vet-dashboard/availability", label: "Hours & Availability", icon: Clock },
     { href: "/vet-dashboard/profile", label: "Clinical Profile", icon: UserCog },
   ];
+
+  if (!isLoading && (!user || (role !== "veterinarian" && role !== "admin"))) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4">
+        <div className="max-w-md w-full bg-slate-950 border border-slate-800 rounded-3xl p-8 text-center space-y-5 shadow-2xl">
+          <div className="w-16 h-16 rounded-2xl bg-teal-950/80 border border-teal-800 text-teal-400 flex items-center justify-center mx-auto">
+            <Lock className="w-8 h-8" />
+          </div>
+          <div className="space-y-1">
+            <h1 className="text-xl font-bold text-white tracking-tight">Clinical Console Restricted</h1>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              This console is restricted to licensed veterinary medical professionals.
+            </p>
+          </div>
+          <div className="bg-teal-950/40 border border-teal-900/60 rounded-xl p-3 text-left text-xs space-y-1">
+            <p className="text-teal-300 font-bold">Licensed Veterinarian Demo Account:</p>
+            <p className="text-slate-300 font-mono text-[11px]">Email: dr.sarah@pawpulse.com</p>
+            <p className="text-slate-300 font-mono text-[11px]">Password: password123</p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 pt-2">
+            <Link
+              href="/login"
+              className="flex-1 py-2.5 px-4 bg-teal-600 hover:bg-teal-500 text-white font-semibold text-xs rounded-xl transition text-center shadow-sm"
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/"
+              className="py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs rounded-xl transition text-center"
+            >
+              Return Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col md:flex-row">

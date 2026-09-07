@@ -26,8 +26,8 @@ export const SEED_USERS: UserProfile[] = [
     email: "dr.sarah@pawpulse.com",
     displayName: "Dr. Sarah Jenkins, DVM",
     role: "veterinarian",
-    phoneNumber: "+1 (555) 234-5678",
-    photoURL: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300",
+    phoneNumber: "+94 11 269 4512",
+    photoURL: "/images/vets/dr-sarah-jenkins.jpg",
     status: "active",
     createdAt: "2026-01-15T09:30:00.000Z",
   },
@@ -36,8 +36,8 @@ export const SEED_USERS: UserProfile[] = [
     email: "dr.marcus@pawpulse.com",
     displayName: "Dr. Marcus Chen, BVSc",
     role: "veterinarian",
-    phoneNumber: "+1 (555) 345-6789",
-    photoURL: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300",
+    phoneNumber: "+94 77 345 6789",
+    photoURL: "/images/vets/dr-marcus-chen.jpg",
     status: "active",
     createdAt: "2026-02-01T10:00:00.000Z",
   },
@@ -47,7 +47,7 @@ export const SEED_USERS: UserProfile[] = [
     displayName: "Dr. Elena Rostova, DVM",
     role: "veterinarian",
     phoneNumber: "+1 (555) 456-7890",
-    photoURL: "https://images.unsplash.com/photo-1594824813576-953e9262fca8?auto=format&fit=crop&q=80&w=300",
+    photoURL: "https://images.unsplash.com/photo-1591604021695-0c69b7c05981?auto=format&fit=crop&q=80&w=600",
     status: "active",
     createdAt: "2026-02-10T11:15:00.000Z",
   },
@@ -79,15 +79,15 @@ export const SEED_VETS: Veterinarian[] = [
     email: "dr.sarah@pawpulse.com",
     displayName: "Dr. Sarah Jenkins, DVM",
     role: "veterinarian",
-    phoneNumber: "+1 (555) 234-5678",
-    photoURL: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300",
+    phoneNumber: "+94 11 269 4512",
+    photoURL: "/images/vets/dr-sarah-jenkins.jpg",
     status: "active",
     createdAt: "2026-01-15T09:30:00.000Z",
     specialty: "Canine & Feline Internal Medicine",
-    licenseNumber: "VET-NY-98421",
+    licenseNumber: "VET-WP-98421",
     clinicName: "PawPulse Central Animal Hospital",
-    clinicAddress: "742 Evergreen Terrace, New York, NY 10001",
-    consultationFee: 75,
+    clinicAddress: "No. 42, Dharmapala Mawatha, Colombo 03",
+    consultationFee: 2500,
     rating: 4.9,
     reviewCount: 128,
     experienceYears: 12,
@@ -106,15 +106,15 @@ export const SEED_VETS: Veterinarian[] = [
     email: "dr.marcus@pawpulse.com",
     displayName: "Dr. Marcus Chen, BVSc",
     role: "veterinarian",
-    phoneNumber: "+1 (555) 345-6789",
-    photoURL: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300",
+    phoneNumber: "+94 77 345 6789",
+    photoURL: "/images/vets/dr-marcus-chen.jpg",
     status: "active",
     createdAt: "2026-02-01T10:00:00.000Z",
     specialty: "Orthopedic & Soft Tissue Surgery",
-    licenseNumber: "VET-NY-84192",
+    licenseNumber: "VET-WP-84192",
     clinicName: "PawPulse Surgical Suites",
-    clinicAddress: "128 Grand Concourse, Brooklyn, NY 11201",
-    consultationFee: 110,
+    clinicAddress: "No. 18, Hospital Road, Narahenpita, Colombo 05",
+    consultationFee: 3500,
     rating: 4.8,
     reviewCount: 94,
     experienceYears: 15,
@@ -133,15 +133,15 @@ export const SEED_VETS: Veterinarian[] = [
     email: "dr.elena@pawpulse.com",
     displayName: "Dr. Elena Rostova, DVM",
     role: "veterinarian",
-    phoneNumber: "+1 (555) 456-7890",
-    photoURL: "https://images.unsplash.com/photo-1594824813576-953e9262fca8?auto=format&fit=crop&q=80&w=300",
+    phoneNumber: "+94 77 456 7890",
+    photoURL: "https://images.unsplash.com/photo-1591604021695-0c69b7c05981?auto=format&fit=crop&q=80&w=600",
     status: "active",
     createdAt: "2026-02-10T11:15:00.000Z",
     specialty: "Exotic Animals & Avian Specialist",
-    licenseNumber: "VET-NY-77123",
+    licenseNumber: "VET-CP-77123",
     clinicName: "PawPulse Exotic Pet Sanctuary",
-    clinicAddress: "45 Roosevelt Way, Queens, NY 11101",
-    consultationFee: 90,
+    clinicAddress: "No. 7, Rajapihilla Road, Kandy",
+    consultationFee: 3000,
     rating: 5.0,
     reviewCount: 76,
     experienceYears: 9,
@@ -152,6 +152,141 @@ export const SEED_VETS: Veterinarian[] = [
       startTime: "10:00",
       endTime: "18:00",
       slotDurationMinutes: 30,
+      daysOff: []
+    }
+  },
+  {
+    uid: "vet_04",
+    email: "dr.david@pawpulse.com",
+    displayName: "Dr. David Miller, DVM",
+    role: "veterinarian",
+    phoneNumber: "+94 11 269 8901",
+    photoURL: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600",
+    status: "active",
+    createdAt: "2026-02-15T08:00:00.000Z",
+    specialty: "Emergency Medicine & Critical Care",
+    licenseNumber: "VET-WP-63841",
+    clinicName: "PawPulse Emergency & ICU Center",
+    clinicAddress: "No. 120, Baseline Road, Colombo 09",
+    consultationFee: 4500,
+    rating: 4.9,
+    reviewCount: 112,
+    experienceYears: 14,
+    bio: "Director of PawPulse's 24/7 ICU triage and emergency trauma bays. Expert in critical care, advanced life support, and rapid multi-system triage.",
+    isApproved: true,
+    availability: {
+      daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+      startTime: "00:00",
+      endTime: "23:59",
+      slotDurationMinutes: 30,
+      daysOff: []
+    }
+  },
+  {
+    uid: "vet_05",
+    email: "dr.aris@pawpulse.com",
+    displayName: "Dr. Aris Thorne, DVM",
+    role: "veterinarian",
+    phoneNumber: "+94 77 678 9012",
+    photoURL: "https://images.unsplash.com/photo-1622902046580-2b47f47f5471?auto=format&fit=crop&q=80&w=600",
+    status: "active",
+    createdAt: "2026-02-20T09:00:00.000Z",
+    specialty: "Advanced Radiology & Diagnostic Imaging",
+    licenseNumber: "VET-WP-52017",
+    clinicName: "PawPulse Imaging & Diagnostics",
+    clinicAddress: "No. 55, Deans Road, Colombo 10",
+    consultationFee: 5000,
+    rating: 4.8,
+    reviewCount: 58,
+    experienceYears: 11,
+    bio: "Board-certified radiologist supervising high-definition CT, digital X-ray, and ultrasound diagnostics for rapid non-invasive internal pathology detection.",
+    isApproved: true,
+    availability: {
+      daysOfWeek: [1, 2, 3, 4, 5],
+      startTime: "08:00",
+      endTime: "16:00",
+      slotDurationMinutes: 45,
+      daysOff: []
+    }
+  },
+  {
+    uid: "vet_06",
+    email: "dr.chloe@pawpulse.com",
+    displayName: "Dr. Chloe Adams, DVM",
+    role: "veterinarian",
+    phoneNumber: "+94 77 789 0123",
+    photoURL: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=600",
+    status: "active",
+    createdAt: "2026-03-01T10:00:00.000Z",
+    specialty: "Dermatology & Allergy Medicine",
+    licenseNumber: "VET-SP-40293",
+    clinicName: "PawPulse Skin & Allergy Clinic",
+    clinicAddress: "No. 23, Galle Road, Dehiwala",
+    consultationFee: 3200,
+    rating: 4.7,
+    reviewCount: 83,
+    experienceYears: 8,
+    bio: "Specialist in chronic skin allergies, autoimmune dermatological conditions, advanced laser otoscopy, and ear disease management in companion animals.",
+    isApproved: true,
+    availability: {
+      daysOfWeek: [1, 2, 4, 5],
+      startTime: "09:30",
+      endTime: "17:30",
+      slotDurationMinutes: 30,
+      daysOff: []
+    }
+  },
+  {
+    uid: "vet_07",
+    email: "dr.julian@pawpulse.com",
+    displayName: "Dr. Julian Patel, BVSc",
+    role: "veterinarian",
+    phoneNumber: "+94 77 890 1234",
+    photoURL: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=600",
+    status: "active",
+    createdAt: "2026-03-05T09:00:00.000Z",
+    specialty: "Veterinary Dentistry & Oral Surgery",
+    licenseNumber: "VET-SP-31759",
+    clinicName: "PawPulse Dental & Oral Health",
+    clinicAddress: "No. 10, Galle Road, Galle",
+    consultationFee: 2800,
+    rating: 4.9,
+    reviewCount: 67,
+    experienceYears: 10,
+    bio: "Expert in preventive oral hygiene, restorative endodontics, ultrasonic scaling, and pain-free periodontal surgeries under safe inhalant anesthesia.",
+    isApproved: true,
+    availability: {
+      daysOfWeek: [2, 3, 4, 5],
+      startTime: "09:00",
+      endTime: "17:00",
+      slotDurationMinutes: 30,
+      daysOff: []
+    }
+  },
+  {
+    uid: "vet_08",
+    email: "dr.maya@pawpulse.com",
+    displayName: "Dr. Maya Lin, DVM",
+    role: "veterinarian",
+    phoneNumber: "+94 77 901 2345",
+    photoURL: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=600",
+    status: "active",
+    createdAt: "2026-03-10T10:00:00.000Z",
+    specialty: "Cardiology & Vascular Medicine",
+    licenseNumber: "VET-WP-28834",
+    clinicName: "PawPulse Heart & Vascular Center",
+    clinicAddress: "No. 88, Kirimandala Mawatha, Colombo 05",
+    consultationFee: 4000,
+    rating: 4.8,
+    reviewCount: 49,
+    experienceYears: 7,
+    bio: "Cardiology fellow specializing in Doppler echocardiography, congenital cardiac anomalies, arrhythmia management, and individualized cardiovascular therapy.",
+    isApproved: true,
+    availability: {
+      daysOfWeek: [1, 3, 5],
+      startTime: "09:00",
+      endTime: "17:00",
+      slotDurationMinutes: 45,
       daysOff: []
     }
   }
@@ -230,7 +365,7 @@ export const SEED_PETS: Pet[] = [
     weight: 38.0,
     allergies: ["Beef protein"],
     microchipNumber: "985-998-120-445-332",
-    photoURL: "https://images.unsplash.com/photo-1589941013453-ec89f33b5455?auto=format&fit=crop&q=80&w=500",
+    photoURL: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&q=80&w=600",
     emergencyContact: {
       name: "David Rose",
       relationship: "Brother",
@@ -476,6 +611,35 @@ Always keep your local 24/7 veterinary emergency hospital phone number and addre
   },
   {
     id: "tip_02",
+    title: "Canine Toxin Ingestion Guide: Chocolate, Xylitol, Lilies & First-Hour Protocols",
+    slug: "canine-toxin-ingestion-emergency-protocol",
+    excerpt: "Every second counts during accidental poisonings. Learn lethal dose thresholds for bakers chocolate, birch sugar (xylitol), grape nephrotoxins, and Easter lilies.",
+    content: `Household toxins represent over 30% of emergency veterinary hospital admissions. Knowing what is toxic and what immediate steps to take can prevent permanent liver necrosis or renal shutdown.
+
+### 1. Xylitol / Birch Sugar (Chewing Gum & Peanut Butter)
+Xylitol triggers an immense, rapid release of insulin in canines, leading to profound hypoglycemia within 30 minutes, followed by acute hepatic failure. Always check peanut butter ingredient labels before filling treat toys.
+
+### 2. Theobromine & Caffeine (Chocolate)
+Dark baking chocolate and cocoa powder contain dangerous concentrations of theobromine. Signs include severe tachycardia, cardiac arrhythmias, muscle tremors, and hyperthermia.
+
+### 3. True Lilies (Feline Renal Emergency)
+All parts of Easter lilies, tiger lilies, and daylilies are exquisitely nephrotoxic to cats. Even grooming pollen grains off their fur can cause irreversible acute tubular necrosis within 48 hours.
+
+### First-Hour Golden Protocol:
+- Never induce vomiting with hydrogen peroxide without veterinary direction - this can cause severe hemorrhagic gastritis.
+- Transport the animal with packaging or photos of the suspected toxin.
+- Call your PawPulse emergency line immediately so antidotes and activated charcoal can be prepared prior to your arrival.`,
+    category: "Emergency Care",
+    coverImage: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=800",
+    authorName: "Dr. Sarah Jenkins, DVM",
+    authorRole: "Critical Care Lead",
+    readTime: "6 min read",
+    published: true,
+    tags: ["Toxins", "Poisoning", "Emergency", "First Aid"],
+    createdAt: "2026-08-05T11:20:00.000Z"
+  },
+  {
+    id: "tip_03",
     title: "Comprehensive Feline Nutrition: Why Wet Food Matters for Kidney Longevity",
     slug: "feline-nutrition-kidney-longevity",
     excerpt: "Cats are obligate carnivores with a naturally low thirst drive. Discover how dietary moisture prevents chronic feline renal disease and lower urinary tract stones.",
@@ -500,7 +664,33 @@ Transitioning your cat should always be gradual over 10 to 14 days to prevent di
     createdAt: "2026-08-12T14:30:00.000Z"
   },
   {
-    id: "tip_03",
+    id: "tip_04",
+    title: "Grain-Free vs. Grain-Inclusive Diets: The Science of DCM & Canine Heart Health",
+    slug: "grain-free-dcm-heart-health-dogs",
+    excerpt: "Examine the veterinary cardiology evidence linking high pulse legume formulations (peas, lentils, chickpeas) with non-hereditary dilated cardiomyopathy in canines.",
+    content: `Over the past decade, grain-free pet food marketing exploded, presenting grains as unnatural fillers. However, peer-reviewed veterinary investigations spearheaded by the FDA and veterinary cardiologists revealed an unexpected trend: an increase in Dilated Cardiomyopathy (DCM) in breeds not genetically predisposed.
+
+### What is Diet-Associated DCM?
+DCM causes ventricular thinning and heart muscle dilation, severely compromising cardiac output and often culminating in congestive heart failure. Researchers identified a strong correlation with boutique, exotic-ingredient, and grain-free (BEG) diets containing heavy concentrations of legumes, peas, and potatoes.
+
+### What Whole Grains Actually Provide
+Wholesome grains like oats, brown rice, barley, and quinoa supply valuable complex carbohydrates, B-vitamins, and prebiotic fibers that nourish beneficial gut microbiomes.
+
+### Veterinary Recommendations:
+- Look for recipes formulated to meet **AAFCO feeding trials** rather than mere nutrient formulation.
+- Avoid boutique formulas where legumes or peas appear in the first 5 ingredients.
+- Schedule annual cardiac auscultation so your clinician can detect early murmurs or gallop rhythms.`,
+    category: "Nutrition",
+    coverImage: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&q=80&w=800",
+    authorName: "Dr. Marcus Chen, BVSc",
+    authorRole: "Internal Medicine Specialist",
+    readTime: "5 min read",
+    published: true,
+    tags: ["Canine", "Nutrition", "Cardiology", "Diet"],
+    createdAt: "2026-08-15T09:00:00.000Z"
+  },
+  {
+    id: "tip_05",
     title: "Understanding Puppy & Kitten Vaccination Schedules in 2026",
     slug: "puppy-kitten-vaccination-schedule-guide",
     excerpt: "A complete guide to maternal antibody clearance, core vs. lifestyle vaccines, and why strict timing between boosters is critical for lifelong immunity.",
@@ -512,9 +702,9 @@ Newborn pets receive protective maternal antibodies through their mother's colos
 As maternal antibodies naturally decay between 6 and 16 weeks of age, a vulnerable window opens where the pet is susceptible to infection. Staggered boosters ensure immunity takes hold as soon as maternal antibodies drop.
 
 ### Core Canine Vaccinations
-1. **Rabies:** Required by law in almost all jurisdictions.
-2. **DAPP / DHPP:** Shields against Distemper, Adenovirus (Hepatitis), Parvovirus, and Parainfluenza.
-3. **Leptospirosis:** Essential for dogs exposed to wildlife, puddles, or urban rodents.
+1. Rabies: Required by law in almost all jurisdictions.
+2. DAPP / DHPP: Shields against Distemper, Adenovirus (Hepatitis), Parvovirus, and Parainfluenza.
+3. Leptospirosis: Essential for dogs exposed to wildlife, puddles, or urban rodents.
 
 Stay on schedule by checking your PawPulse pet dashboard for automated vaccination status updates.`,
     category: "Vaccinations",
@@ -527,8 +717,87 @@ Stay on schedule by checking your PawPulse pet dashboard for automated vaccinati
     createdAt: "2026-08-20T09:15:00.000Z"
   },
   {
-    id: "tip_04",
-    title: "Fear-Free Handling: How to Reduce Vet Visit Anxiety for Pets",
+    id: "tip_06",
+    title: "Lifestyle & Non-Core Vaccines: Bordetella, Lyme Disease & Canine Influenza Explained",
+    slug: "lifestyle-vaccines-lyme-bordetella-influenza",
+    excerpt: "Determine whether your dog requires lifestyle immunizations based on boarding habits, regional tick density, dog parks, and grooming facility policies.",
+    content: `While core vaccines (Rabies, Distemper, Parvovirus) are medically essential for every dog regardless of environment, non-core lifestyle vaccines should be customized to your pet's geographic exposure and social habits.
+
+### 1. Bordetella Bronchiseptica (Kennel Cough)
+Bordetella is a highly contagious bacterial pathogen causing tracheobronchitis, manifesting as a dry honking cough. Recommended every 6–12 months for dogs who frequent boarding kennels, daycares, agility trials, or grooming salons.
+
+### 2. Borrelia Burgdorferi (Lyme Disease)
+Transmitted by black-legged deer ticks (*Ixodes scapularis*). In tick-endemic regions, combining tick preventatives with the Lyme vaccine offers dual-barrier defense against polyarthritis, lameness, and Lyme nephritis.
+
+### 3. Canine Influenza (H3N8 / H3N2)
+Canine influenza causes severe respiratory symptoms and secondary bacterial pneumonia. Bivalent canine flu vaccines protect against both prevalent epidemic strains.
+
+Consult your PawPulse veterinarian during annual wellness visits to configure your companion's personalized immunization matrix.`,
+    category: "Vaccinations",
+    coverImage: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&q=80&w=800",
+    authorName: "Dr. Elena Rostova, DVM",
+    authorRole: "Clinical Immunologist",
+    readTime: "5 min read",
+    published: true,
+    tags: ["Vaccines", "Lyme Disease", "Kennel Cough", "Prevention"],
+    createdAt: "2026-08-22T13:40:00.000Z"
+  },
+  {
+    id: "tip_07",
+    title: "Dental Disease in Pets: Silent Pain, Plaque Bacteria & Organ Damage Risks",
+    slug: "pet-dental-disease-heart-health",
+    excerpt: "Over 80% of dogs and cats over age three suffer from active periodontal disease. Uncover why bad breath is never normal and how oral bacteria impact heart valves and kidneys.",
+    content: `Dental disease is the most under-diagnosed chronic medical condition in companion animals. Because pets continue to eat despite mouth pain, owners often overlook progressive gingivitis and subgingival root decay.
+
+### The Hidden Iceberg: Subgingival Pathology
+Over 60% of a tooth's structure lies submerged below the gumline. While teeth may appear superficially white, subgingival bacterial biofilms destroy periodontal ligaments and alveolar bone.
+
+### Systemic Health Consequences:
+- **Bacteremia:** Chewing on inflamed gums pushes oral bacteria into the bloodstream.
+- **Valvular Endocarditis:** Bacteria colonize mitral heart valves, contributing to murmur progression.
+- **Renal & Hepatic Stress:** Continuous bacterial filtration burdens the glomeruli and liver parenchyma.
+
+### Best Practice Dental Protocol:
+1. **Daily Enzymatic Brushing:** Use poultry- or malt-flavored enzymatic veterinary toothpaste (never human toothpaste containing fluoride).
+2. **Annual Professional Prophylaxis:** Ultrasonic scaling, subgingival curettage, and computerized dental X-rays under safe inhalant anesthesia.`,
+    category: "Health & Wellness",
+    coverImage: "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=800",
+    authorName: "Dr. Marcus Chen, BVSc",
+    authorRole: "Veterinary Dental Surgeon",
+    readTime: "5 min read",
+    published: true,
+    tags: ["Dental", "Oral Health", "Wellness", "Preventative"],
+    createdAt: "2026-08-24T10:30:00.000Z"
+  },
+  {
+    id: "tip_08",
+    title: "Senior Pet Mobility Guide: Arthritis Management, Joint Injections & Home Adaptations",
+    slug: "senior-pet-arthritis-vitality-guide",
+    excerpt: "Help your aging dog or cat thrive comfortably through multimodal osteoarthritis management, revolutionary monoclonal antibodies, and orthopedic environmental modifications.",
+    content: `Watching our loyal companions grow old is a privilege, but osteoarthritis (degenerative joint disease) can silently erode their quality of life. Modern veterinary medicine offers unprecedented treatments to restore mobility and comfort.
+
+### Subtle Signs of Joint Discomfort
+- Reluctance to jump on furniture or ascend car stairs.
+- Hesitation or stiffness upon waking from naps that 'warms out' during the day.
+- Cat litter box accidents (rim too high to step over).
+- Excessive licking over carpal or stifle joints.
+
+### Multimodal Treatment Pyramid:
+1. **Targeted Monoclonal Antibodies:** Next-generation bedinvetmab (Librela for dogs) and frunevetmab (Solensia for cats) neutralize Nerve Growth Factor (NGF), providing continuous monthly pain alleviation without organ strain.
+2. **Nutraceutical Support:** High-potency Omega-3 fatty acids (EPA/DHA) and green-lipped mussel extract suppress inflammatory joint cytokines.
+3. **Environmental Modifications:** Place non-slip rugs across hardwood floors, provide orthopedic memory foam bedding, and install gradual bedside ramps.`,
+    category: "Health & Wellness",
+    coverImage: "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&q=80&w=800",
+    authorName: "Dr. Sarah Jenkins, DVM",
+    authorRole: "Geriatric Medicine Specialist",
+    readTime: "6 min read",
+    published: true,
+    tags: ["Senior Pets", "Arthritis", "Joint Health", "Pain Management"],
+    createdAt: "2026-08-26T15:10:00.000Z"
+  },
+  {
+    id: "tip_09",
+    title: "Fear-Free Handling: How to Reduce Vet Visit Anxiety for Dogs & Cats",
     slug: "fear-free-handling-vet-anxiety",
     excerpt: "Learn science-backed techniques using positive reinforcement, high-value rewards, and calm clinic environments to transform veterinary visits into stress-free experiences.",
     content: `Visiting the veterinary hospital should not feel like an ordeal. Fear-Free handling principles focus on managing emotional wellbeing alongside physical health.
@@ -546,7 +815,33 @@ At PawPulse, our certified fear-free veterinary staff uses non-slip table pads, 
     readTime: "4 min read",
     published: true,
     tags: ["Behavior", "Fear Free", "Anxiety", "Training"],
-    createdAt: "2026-08-25T16:00:00.000Z"
+    createdAt: "2026-08-28T16:00:00.000Z"
+  },
+  {
+    id: "tip_10",
+    title: "Separation Anxiety in Dogs: Systematic Desensitization, Enrichment & Calming Protocols",
+    slug: "separation-anxiety-dogs-desensitization-guide",
+    excerpt: "Distinguish true separation distress from canine boredom. Implement departure cue desensitization, puzzle enrichment protocols, and safe alone-time milestones.",
+    content: `Canine separation anxiety is a panic disorder triggered by being left alone or separated from specific attachment figures. Dogs experiencing separation distress are in a state of neurochemical panic, not acting out of malice or spite.
+
+### Recognizing True Separation Anxiety
+- Persistent vocalization (howling, barking) commencing within 10–15 minutes of departure.
+- Destructive chewing concentrated specifically around exit points (door frames, window sills).
+- Excessive hypersalivation, lip-licking, pacing, or indoor elimination despite house-training.
+
+### The 4-Pillar Behavioral Solution:
+1. Desensitize Departure Cues: Pick up car keys, put on your shoes, or touch the front doorknob, then sit back on the couch without leaving. This uncouples cues from panic.
+2. High-Value Licking Enrichment: Offer frozen Kong toys filled with wet food, plain pumpkin, or xylitol-free peanut butter upon stepping out. Licking releases endorphins and reduces cortisol.
+3. Gradual Alone-Time Sub-Threshold Increments: Start with 30-second absences, returning before anxiety spikes. Build duration progressively.
+4. Veterinary Behavioral Consult: For moderate to severe cases, your PawPulse clinician can evaluate situational medication to facilitate learning during training.`,
+    category: "Training & Behavior",
+    coverImage: "https://i.pinimg.com/736x/4d/a4/ca/4da4cab4e1daa78413d5d4df135b69e8.jpg",
+    authorName: "Dr. Elena Rostova, DVM",
+    authorRole: "Animal Behaviorist",
+    readTime: "5 min read",
+    published: true,
+    tags: ["Behavior", "Separation Anxiety", "Training", "Canine Psychology"],
+    createdAt: "2026-08-30T12:00:00.000Z"
   }
 ];
 

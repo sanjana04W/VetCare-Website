@@ -102,18 +102,18 @@ export function Footer() {
             <ul className="space-y-2.5 text-xs text-slate-400">
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-brand-400 shrink-0 mt-0.5" />
-                <span>742 Evergreen Terrace, New York, NY 10001</span>
+                <span>No. 42, Dharmapala Mawatha, Colombo 03, Sri Lanka</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-brand-400 shrink-0" />
-                <a href="tel:18005557297" className="hover:text-white transition">
-                  (800) 555-PAWS / (555) 019-2834
+                <a href="tel:+94112697297" className="hover:text-white transition">
+                  +94 11 269 7297 / +94 11 269 4512
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 text-brand-400 shrink-0" />
-                <a href="mailto:support@pawpulse.com" className="hover:text-white transition">
-                  care@pawpulse.com
+                <a href="mailto:care@pawpulse.lk" className="hover:text-white transition">
+                  care@pawpulse.lk
                 </a>
               </li>
             </ul>

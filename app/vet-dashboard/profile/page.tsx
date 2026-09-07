@@ -24,7 +24,7 @@ export default function VetProfilePage() {
   const [licenseNumber, setLicenseNumber] = useState("");
   const [clinicName, setClinicName] = useState("");
   const [clinicAddress, setClinicAddress] = useState("");
-  const [consultationFee, setConsultationFee] = useState(75);
+  const [consultationFee, setConsultationFee] = useState(2500);
   const [experienceYears, setExperienceYears] = useState(10);
   const [bio, setBio] = useState("");
   const [photoURL, setPhotoURL] = useState("");

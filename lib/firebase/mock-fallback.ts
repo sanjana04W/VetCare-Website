@@ -33,7 +33,7 @@ interface MockStore {
   notifications: NotificationItem[];
 }
 
-const STORAGE_KEY = "pawpulse_db_v1";
+const STORAGE_KEY = "pawpulse_db_v5";
 
 function getInitialStore(): MockStore {
   return {
@@ -58,10 +58,30 @@ export function loadStore(): MockStore {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
       const initial = getInitialStore();
+      // Migrate legacy stores to preserve user appointments, records, and reviews
+      for (const legacyKey of ["pawpulse_db_v4", "pawpulse_db_v3", "pawpulse_db_v2", "pawpulse_db_v1"]) {
+        const legacy = localStorage.getItem(legacyKey);
+        if (legacy) {
+          try {
+            const parsed = JSON.parse(legacy);
+            if (parsed.appointments) initial.appointments = parsed.appointments;
+            if (parsed.medicalRecords) initial.medicalRecords = parsed.medicalRecords;
+            if (parsed.reviews) initial.reviews = parsed.reviews;
+          } catch {
+            // ignore
+          }
+          break;
+        }
+      }
       localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
       return initial;
     }
-    return JSON.parse(raw);
+    const store = JSON.parse(raw) as MockStore;
+    // Always sync latest vets list (adds new doctors), tips, and photos
+    store.vets = [...SEED_VETS];
+    store.tips = [...SEED_TIPS];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+    return store;
   } catch {
     return getInitialStore();
   }

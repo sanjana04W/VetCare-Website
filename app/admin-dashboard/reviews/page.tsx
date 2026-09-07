@@ -93,7 +93,7 @@ export default function AdminReviewsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by client, doctor, or keyword..."
-            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-purple-500 bg-slate-50"
+            className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-brand-500 bg-slate-50"
           />
         </div>
 
@@ -104,7 +104,7 @@ export default function AdminReviewsPage() {
               onClick={() => setFilterRating(star)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
                 filterRating === star
-                  ? "bg-purple-600 text-white shadow-xs"
+                  ? "bg-brand-600 text-white shadow-xs"
                   : "bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200"
               }`}
             >
@@ -149,7 +149,7 @@ export default function AdminReviewsPage() {
                 </div>
 
                 <div className="text-xs text-slate-500 flex items-center gap-1.5">
-                  <Stethoscope className="w-3.5 h-3.5 text-purple-600 shrink-0" />
+                  <Stethoscope className="w-3.5 h-3.5 text-brand-600 shrink-0" />
                   <span>Consulted: <strong>{rev.vetName}</strong></span>
                 </div>
 
@@ -158,11 +158,11 @@ export default function AdminReviewsPage() {
                 </p>
 
                 {rev.response && (
-                  <div className="p-3 rounded-2xl bg-purple-50/70 border border-purple-100 text-xs space-y-1">
-                    <span className="font-bold text-purple-900 text-[11px] flex items-center gap-1">
+                  <div className="p-3 rounded-2xl bg-brand-50/70 border border-brand-100 text-xs space-y-1">
+                    <span className="font-bold text-brand-900 text-[11px] flex items-center gap-1">
                       <CornerDownRight className="w-3.5 h-3.5" /> Official Clinic Response:
                     </span>
-                    <p className="text-purple-800">{rev.response}</p>
+                    <p className="text-brand-800">{rev.response}</p>
                   </div>
                 )}
               </div>
@@ -170,7 +170,7 @@ export default function AdminReviewsPage() {
               <div className="pt-3 border-t border-slate-100 flex items-center justify-end">
                 <button
                   onClick={() => handleOpenReply(rev)}
-                  className="px-3 py-1.5 bg-slate-100 hover:bg-purple-50 hover:text-purple-700 text-slate-700 text-xs font-semibold rounded-xl transition flex items-center gap-1"
+                  className="px-3 py-1.5 bg-slate-100 hover:bg-brand-50 hover:text-brand-700 text-slate-700 text-xs font-semibold rounded-xl transition flex items-center gap-1"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                   <span>{rev.response ? "Edit Response" : "Respond to Review"}</span>
@@ -212,7 +212,7 @@ export default function AdminReviewsPage() {
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Thank the client, acknowledge the pet by name, and reaffirm hospital clinical care..."
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-brand-500 resize-none"
                 />
               </div>
 
@@ -226,7 +226,7 @@ export default function AdminReviewsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition"
+                  className="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl transition"
                 >
                   Publish Response
                 </button>

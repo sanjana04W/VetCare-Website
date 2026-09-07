@@ -44,7 +44,7 @@ export default function PetCareTipsPage() {
     <div className="space-y-12 py-12">
       {/* Header */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto space-y-4">
+        <div className="reveal-fade-in text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
             Veterinary Insights
           </span>
@@ -58,7 +58,7 @@ export default function PetCareTipsPage() {
       </section>
 
       {/* Search & Category Pills */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <section className="reveal-scale-up max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="max-w-md mx-auto relative">
           <Search className="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5" />
           <input
@@ -106,18 +106,23 @@ export default function PetCareTipsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredTips.map((tip) => (
+            {filteredTips.map((tip, idx) => {
+              const delays = ["delay-75", "delay-150", "delay-225"];
+              return (
               <Link
                 key={tip.id}
                 href={`/pet-care-tips/${tip.slug}`}
-                className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                className={`reveal-scale-up ${delays[idx % delays.length]} group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm card-interactive flex flex-col justify-between`}
               >
                 <div>
                   <div className="relative h-52 w-full bg-slate-100 overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={tip.coverImage}
+                      src={tip.coverImage || "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=800"}
                       alt={tip.title}
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=800";
+                      }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-white">
@@ -160,7 +165,8 @@ export default function PetCareTipsPage() {
                   <ArrowRight className="w-4 h-4 pt-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
-            ))}
+            );
+          })}
           </div>
         )}
       </section>
