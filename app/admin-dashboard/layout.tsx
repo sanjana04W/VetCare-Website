@@ -18,7 +18,8 @@ import {
   ArrowLeft,
   Menu,
   X,
-  Lock
+  Lock,
+  LogOut
 } from "lucide-react";
 
 export default function AdminDashboardLayout({
@@ -27,7 +28,7 @@ export default function AdminDashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { adminUser, isAdminLoading, adminLogout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navItems = [
@@ -39,6 +40,38 @@ export default function AdminDashboardLayout({
     { href: "/admin-dashboard/reviews", label: "Reviews & Ratings", icon: MessageSquare },
     { href: "/admin-dashboard/notifications", label: "Broadcast & Alerts", icon: Bell },
   ];
+
+  if (!isAdminLoading && !adminUser) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-900 px-4">
+        <div className="max-w-md w-full bg-slate-950 border border-slate-800 rounded-3xl p-8 text-center space-y-5 shadow-2xl">
+          <div className="w-16 h-16 rounded-2xl bg-brand-950/80 border border-brand-800 text-brand-400 flex items-center justify-center mx-auto">
+            <Lock className="w-8 h-8" />
+          </div>
+          <div className="space-y-1">
+            <h1 className="text-xl font-bold text-white tracking-tight">Admin Access Restricted</h1>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              This panel is exclusively for hospital administrators.
+              Regular user accounts cannot access this dashboard.
+            </p>
+          </div>
+          <div className="bg-brand-950/40 border border-brand-900/60 rounded-xl p-3.5 text-left text-xs space-y-1.5">
+            <p className="text-brand-300 font-bold">Authorized Admin Credentials:</p>
+            <p className="text-slate-300 font-mono text-[11px]">Email: <strong>admin@pawpulse.com</strong></p>
+            <p className="text-slate-300 font-mono text-[11px]">Password: <strong>password123</strong></p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-2 pt-2">
+            <Link
+              href="/admin/login"
+              className="flex-1 py-2.5 px-4 bg-brand-600 hover:bg-brand-500 text-white font-semibold text-xs rounded-xl transition text-center shadow-sm"
+            >
+              Sign In as Admin
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col md:flex-row">
@@ -68,13 +101,13 @@ export default function AdminDashboardLayout({
             </button>
           </div>
 
-          <div className="px-3 py-2 rounded-xl bg-purple-950/40 border border-purple-800/40 text-xs">
-            <span className="text-[10px] font-bold uppercase text-purple-400 block tracking-wider flex items-center gap-1">
+          <div className="px-3 py-2 rounded-xl bg-brand-950/40 border border-brand-800/40 text-xs">
+            <span className="text-[10px] font-bold uppercase text-brand-400 block tracking-wider flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5" />
               Hospital Administration
             </span>
             <p className="font-bold text-white truncate mt-0.5">
-              {user?.displayName || "Eleanor Vance"}
+              {adminUser?.displayName || "Eleanor Vance (Hospital Director)"}
             </p>
           </div>
 
@@ -89,7 +122,7 @@ export default function AdminDashboardLayout({
                   onClick={() => setSidebarOpen(false)}
                   className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                     isActive
-                      ? "bg-purple-600 text-white shadow-sm shadow-purple-600/30"
+                      ? "bg-brand-600 text-white shadow-sm shadow-brand-600/30"
                       : "text-slate-400 hover:text-white hover:bg-slate-900"
                   }`}
                 >
@@ -102,13 +135,13 @@ export default function AdminDashboardLayout({
         </div>
 
         <div className="p-4 border-t border-slate-900 space-y-2 text-xs">
-          <Link
-            href="/"
-            className="flex items-center gap-2 px-3 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900 transition"
+          <button
+            onClick={adminLogout}
+            className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 transition"
           >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Return to Public Site</span>
-          </Link>
+            <LogOut className="w-4 h-4" />
+            <span>Sign Out (Admin)</span>
+          </button>
         </div>
       </aside>
 
@@ -123,7 +156,7 @@ export default function AdminDashboardLayout({
               <Menu className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-purple-600" />
+              <ShieldCheck className="w-5 h-5 text-brand-600" />
               <h1 className="text-base sm:text-lg font-bold text-slate-900">
                 Hospital Command & Administration Panel
               </h1>
@@ -132,9 +165,14 @@ export default function AdminDashboardLayout({
 
           <div className="flex items-center gap-3">
             <NotificationDropdown />
-            <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-700 font-bold text-xs flex items-center justify-center border border-purple-200">
-              Adm
-            </div>
+            <button
+              onClick={adminLogout}
+              title="Sign Out of Admin Panel"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition border border-slate-200"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Sign Out</span>
+            </button>
           </div>
         </header>
 

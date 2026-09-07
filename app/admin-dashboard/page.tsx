@@ -96,10 +96,10 @@ export default function AdminOverviewPage() {
         <div className="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Upcoming Visits</span>
-            <Calendar className="w-5 h-5 text-purple-600" />
+            <Calendar className="w-5 h-5 text-brand-600" />
           </div>
           <p className="text-2xl font-extrabold text-slate-900 mt-2">{metrics?.upcomingAppointmentsCount ?? 0}</p>
-          <span className="text-[10px] text-purple-600 font-semibold block mt-1">Active Queue</span>
+          <span className="text-[10px] text-brand-600 font-semibold block mt-1">Active Queue</span>
         </div>
 
         {/* Vaccine Alerts */}
@@ -134,7 +134,7 @@ export default function AdminOverviewPage() {
             </div>
             <Link
               href="/admin-dashboard/appointments"
-              className="text-xs font-semibold text-purple-600 hover:text-purple-700 flex items-center gap-1"
+              className="text-xs font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -178,7 +178,7 @@ export default function AdminOverviewPage() {
               </h3>
               <Link
                 href="/admin-dashboard/veterinarians"
-                className="text-xs font-semibold text-purple-600 hover:underline"
+                className="text-xs font-semibold text-brand-600 hover:underline"
               >
                 Manage
               </Link>
@@ -197,7 +197,7 @@ export default function AdminOverviewPage() {
                     <p className="text-amber-800 text-[11px]">{pv.specialty} • License: {pv.licenseNumber}</p>
                     <Link
                       href="/admin-dashboard/veterinarians"
-                      className="inline-block pt-1 text-[11px] font-bold text-purple-700 hover:underline"
+                      className="inline-block pt-1 text-[11px] font-bold text-brand-700 hover:underline"
                     >
                       Review Credentials &rarr;
                     </Link>
@@ -216,7 +216,7 @@ export default function AdminOverviewPage() {
               </h3>
               <Link
                 href="/admin-dashboard/reviews"
-                className="text-xs font-semibold text-purple-600 hover:underline"
+                className="text-xs font-semibold text-brand-600 hover:underline"
               >
                 Moderate
               </Link>
